@@ -1,0 +1,11 @@
+Flask
+Flask-CORS
+flask_talisman
+pymysql
+gunicorn
+dotenv
+Pillow
+Werkzeug
+pillow-heif
+bcrypt
+jwt

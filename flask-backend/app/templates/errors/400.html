@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}400 - Bad Request{% endblock %}
+{% block content %}
+<div class="text-center mt-5">
+    <h1 class="display-1">400</h1>
+    <h2>Bad Request</h2>
+    <p class="lead">The request could not be understood by the server.</p>
+    <p>Please check your input and try again.</p>
+    <a href="{{ url_for('main.entry') }}" class="btn btn-primary mt-3">Go Home</a>
+</div>
+{% endblock %}

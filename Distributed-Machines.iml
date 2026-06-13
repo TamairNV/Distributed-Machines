@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Python" name="Python">
+      <configuration sdkName="Python 3.14 (CSC2033_Team32_25-26)" />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/flask-backend/app/static/images" />
+      <excludeFolder url="file://$MODULE_DIR$/tmp" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Python 3.14 (CSC2033_Team32_25-26) interpreter library" level="application" />
+  </component>
+</module>
