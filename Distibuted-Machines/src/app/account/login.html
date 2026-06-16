@@ -1,0 +1,22 @@
+
+<div class="m-4">
+<div class="auth-card">
+  <h2 class="text-center">Welcome Back!</h2>
+
+  <div class="form-group">
+    <input type="text" class="form-control" [(ngModel)]="userName" placeholder="Username">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" [(ngModel)]="userPasskey" placeholder="Passkey">
+  </div>
+
+  <button class="btn-primary" (click)="createUser()">Login</button>
+
+  <div class="error-message">{{ incorrect_login() }}</div>
+
+  <div class="divider"></div>
+
+  <a routerLink="/create-account" class="link-as-button">Need an account? Create one</a>
+</div>
+</div>

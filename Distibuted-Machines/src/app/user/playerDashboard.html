@@ -1,0 +1,50 @@
+
+
+<h1 class="text-4xl font-extrabold text-center text-white">Are you ready to start!</h1>
+<br>
+<div class="flex justify-center">
+  <button
+    (click)="start()"
+    [class.bg-emerald-600]="!status && startButton == 'START'"
+    [class.bg-red-600]="status ||startButton != 'START' "
+    class="rounded-[0.5rem] text-white text-center px-4 py-1 mx-auto text-2xl font-extrabold transition transform duration-200 hover:scale-105 active:scale-95">
+    {{startButton}}
+  </button>
+
+
+
+</div>
+<br>
+
+
+<div *ngIf="!modelInstalled">
+<div class ="mx-auto text-center text-white">Downloading Model</div>
+<div class=" bg-white rounded-full h-3 w-1/2 mx-auto ">
+  <div class="bg-[#7F53F1] h-3 rounded-full" [style.width.%]="model_download_percentage"></div>
+  <div class="text-white text-center">{{model_download_percentage}}%</div>
+
+</div>
+
+<br>
+<br>
+</div>
+
+<div class="text-white text-center" >Global Progress</div>
+
+<div>
+  <div class="text-white text-center">{{totalProgress}}%</div>
+  <div class=" bg-white rounded-full h-3 w-1/2 mx-auto ">
+    <div class="bg-[#7F53F1] h-3 rounded-full" [style.width.%]="totalProgress"></div>
+  </div>
+  <br>
+  <div class="text-white text-center">Total User Contribution: {{user_con}}</div>
+
+</div>
+
+<div *ngIf="currentImage !== 'NONE'" class="flex justify-center items-center w-1/2 my-6 mx-auto">
+  <img [src]="currentImage" class="max-w-md w-full h-auto rounded-lg shadow-lg">
+</div>
+
+<div *ngIf="currentImage !== 'NONE'" class="text-white text-center">
+  {{currentID}}
+</div>

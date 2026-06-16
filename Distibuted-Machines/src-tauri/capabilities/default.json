@@ -1,0 +1,76 @@
+{
+  "identifier": "default",
+  "description": "Default capability for the application",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "fs:allow-mkdir",
+    "fs:allow-write-file",
+    "fs:allow-read-file",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        {
+          "path": "$APPDATA"
+        },
+        {
+          "path": "$APPDATA/**"
+        }
+      ]
+    },
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "ollama",
+          "cmd": "ollama"
+        },
+        {
+          "name": "ollama-win",
+          "cmd": "ollama"
+        },
+        {
+          "name": "ollama-mac-intel",
+          "cmd": "/usr/local/bin/ollama"
+        },
+        {
+          "name": "ollama-mac-m1",
+          "cmd": "/opt/homebrew/bin/ollama"
+        }
+      ]
+    },
+    {
+      "identifier": "shell:allow-spawn",
+      "allow": [
+        {
+          "name": "ollama-win",
+          "cmd": "ollama"
+        },
+        {
+          "name": "ollama-mac-intel",
+          "cmd": "/usr/local/bin/ollama"
+        },
+        {
+          "name": "ollama-mac-m1",
+          "cmd": "/opt/homebrew/bin/ollama"
+        }
+      ]
+    },
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "http://localhost:*"
+        },
+        {
+          "url": "http://127.0.0.1:*"
+        },
+        { "url": "http://localhost:*" },
+        { "url": "http://127.0.0.1:*" }
+      ]
+    },
+    "shell:default"
+  ]
+}
