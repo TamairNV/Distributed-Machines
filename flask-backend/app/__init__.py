@@ -14,7 +14,7 @@ def create_app():
   app.config.from_object(Config)
   app.config['MAX_CONTENT_LENGTH'] = 6000 * 1024 * 1024
 
-  CORS(app, origins=["http://localhost:4200"])
+  CORS(app, origins=["http://localhost:4200"],supports_credentials=True)
   Talisman(app,
            force_https=False,
            strict_transport_security=False,

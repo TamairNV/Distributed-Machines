@@ -85,8 +85,8 @@ def login_user():
     'access_token',
     token,
     httponly=True,
-    samesite='Lax',
-    secure=False    # Set to True in production so it only sends over HTTPS
+    samesite='None',
+    secure=True    # Set to True in production so it only sends over HTTPS
   )
 
   return resp
