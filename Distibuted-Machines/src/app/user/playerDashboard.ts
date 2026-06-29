@@ -64,6 +64,7 @@ class PlayerDashboard implements OnInit {
           }
           this.images = response.received
           console.log(this.images)
+          console.log("Checking Ollama")
           await this.checkOllama()
         }
       });
@@ -124,7 +125,7 @@ class PlayerDashboard implements OnInit {
 
       // See if your model is in the list
       const hasModel = data.models.some((m: any) =>
-        m.name === 'qwen2.5-vl:7b' || m.name === 'qwen2.5vl:7b'
+        m.name === 'hf.co/RadioactiveAnt7/fpv-spotter' || m.name === 'fpv-spotter'
       );
 
       if (hasModel) {
@@ -156,7 +157,7 @@ class PlayerDashboard implements OnInit {
     const response = await fetch('http://localhost:11434/api/pull', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'qwen2.5vl:7b' })
+      body: JSON.stringify({ model: 'hf.co/RadioactiveAnt7/fpv-spotter' })
     });
 
     const reader = response.body?.getReader();
@@ -200,26 +201,32 @@ class PlayerDashboard implements OnInit {
       const retrievedFile = this.imageStore.get(id);
       if (!retrievedFile) throw new Error(`No image found for ID: ${id}`);
 
-      // 1. Convert the raw Blob to Base64 (Required by Ollama)
+// 1. Convert the raw Blob to Base64 (Required by Ollama)
       const base64Image = await new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(retrievedFile);
         reader.onloadend = () => {
           const result = reader.result as string;
-          resolve(result.split(',')[1]); // Strip the data URI prefix
+          if (!result || !result.includes(',')) {
+            reject(new Error("Invalid or empty image data URI generated."));
+            return;
+          }
+          resolve(result.split(',')[1]); // Safely isolate only the raw base64 bytes
         };
         reader.onerror = reject;
       });
 
-      // 2. Build the exact JSON payload Ollama expects
+      let cleanPromptText = this.prompt;
+
+
       const modelData = {
-        model: 'qwen2.5vl:7b',
-        prompt: this.prompt,
+        model: 'hf.co/RadioactiveAnt7/fpv-spotter',
+        prompt: cleanPromptText,
         stream: false,
-        images: [base64Image] // Must be an array of base64 strings
+        images: [base64Image]
       };
 
-      // 3. Fire it off to Caddy over HTTP/2
+
       const response = await fetch('http://localhost:11434/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -230,7 +237,12 @@ class PlayerDashboard implements OnInit {
       if (!response.ok) throw new Error(`Ollama status: ${response.status}`);
 
       const ollamaData = await response.json();
+
+      console.log("Raw from Ollama:", ollamaData.response);
+
       const parsedAnalysis = this.extractJson(ollamaData.response);
+
+      console.log("Successfully parsed object:", parsedAnalysis);
 
       await this.submitResultToBackend(id, parsedAnalysis);
 
