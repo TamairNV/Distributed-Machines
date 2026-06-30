@@ -36,6 +36,5 @@ services:
 
 networks:
   Machines_default:
-    external: true
   csc2033_team32_25-26_default:
     external: true
