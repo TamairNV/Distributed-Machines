@@ -1,13 +1,17 @@
 version: '3.8'
 services:
   backend:
-    build: ./flask-backend
+    build:
+      context: ./flask-backend
+      dockerfile: Dockerfile
     ports:
       - "8001:8001"
     networks:
       - default
   frontend:
-    build: ./Distibuted-Machines
+    build:
+      context: ./Distibuted-Machines
+      dockerfile: Dockerfile
     networks:
       - default
       - proxy-net
