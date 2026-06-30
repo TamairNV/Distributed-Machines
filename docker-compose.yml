@@ -4,7 +4,7 @@ services:
   frontend:
     build: ./Distibuted-Machines
     ports:
-      - "8082:80"
+      - "8085:80"
     restart: always
     networks:
       - Machines_default
@@ -15,7 +15,7 @@ services:
       - PYTHONUNBUFFERED=1
     build: ./flask-backend
     ports:
-      - "8003:8002"
+      - "8005:8004"
     restart: always
     env_file: .env
     networks:
