@@ -237,3 +237,30 @@ def save_images_to_database(spots_csv_dir):
     if connection: connection.rollback()
     return False
 #save_images_to_database("/Users/tamair/IdeaProjects/Distributed-Machines/flask-backend/app/static/master_candidates_reduced.csv")
+
+
+def save_image_results(image_id, analysis):
+  query = """
+          UPDATE Image
+          SET freestyle_rating = %s,
+              cinematic_rating = %s,
+              obstacle_density = %s,
+              busyness = %s
+
+
+          WHERE image_id = %s;
+
+  """
+
+  try:
+    connection = get_db()
+    params = [analysis['freestyle_rating'],analysis['cinematic_rating'],analysis['obstacle_density'],analysis['busyness'],image_id]
+    run_query(connection, query, params)
+
+    query = "UPDATE Job SET status = 'Completed', time_finished = NOW() WHERE image_id = %s;"
+    params = [image_id]
+    return run_query(connection, query, params)
+
+  except Exception as e:
+    print(f"Query Failed: {e}")
+    return False

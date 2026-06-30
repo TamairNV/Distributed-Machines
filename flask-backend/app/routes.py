@@ -188,3 +188,14 @@ def get_prompt(current_user_id):
 
 
 
+@main.route('/api/submit-results',methods=['POST'])
+@token_required
+def submit_results(current_user_id):
+  data = request.get_json()
+  if data.get('analysis'):
+    save_image_results(data['imageId'],data['analysis'])
+    print("image scores saved")
+    return jsonify({"status": "Success", "received": data})
+
+  print("error in saving scores ",data)
+  return jsonify({"status": "Failed", "received": data})
