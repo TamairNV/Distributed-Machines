@@ -1,22 +1,41 @@
 version: '3.8'
+
 services:
-  backend:
-    build:
-      context: ./flask-backend
-      dockerfile: Dockerfile
-    ports:
-      - "8001:8001"
-    networks:
-      - default
   frontend:
-    build:
-      context: ./Distibuted-Machines
-      dockerfile: Dockerfile
+    build: .
+    ports:
+      - "8082:80"
+    restart: always
     networks:
-      - default
-      - proxy-net
+      - Machines_default
+
+  backend:
+    environment:
+      - PYTHONUNBUFFERED=1
+    build: ./flask-backend
+    ports:
+      - "8002:8002"
+    restart: always
+    env_file: .env
+    networks:
+      - Machines_default
+      - csc2033_team32_25-26_default
+    volumes:
+      - ./uploads:/app/static/uploads
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare-tunnel
+    command: tunnel run
+    restart: always
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - Machines_default
+      - csc2033_team32_25-26_default
 
 networks:
-  proxy-net:
-    external:
-      name: csc2033_team32_25-26-nginx-proxy-manager-1_default
+  Machines_default:
+    external: true
+  csc2033_team32_25-26_default:
+    external: true
