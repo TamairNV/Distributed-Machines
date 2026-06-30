@@ -1,22 +1,29 @@
 
-<div class="m-4">
-<div class="auth-card">
-  <h2 class="text-center">Welcome Back!</h2>
+<div class="">
+<div class="">
+  <h2 class="font-extrabold text-white mx-auto text-center text-4xl">Welcome Back!</h2>
+  <br>
+  <div class="mx-auto text-center">
+    <input type="text" class="border-0 border-b-2 border-b-purple-700 text-center text-white" [(ngModel)]="userName" placeholder="Username">
+    <br>
+    <br>
 
-  <div class="form-group">
-    <input type="text" class="form-control" [(ngModel)]="userName" placeholder="Username">
+    <input type="text" class="border-0 border-b-2 border-b-purple-700 text-center text-white" [(ngModel)]="userPasskey" placeholder="Passkey">
+    <br>
+    <br>
+    <button class="text-center mx-auto text-white bg-blue-600 px-5 py-2 rounded-lg transition-transform duration-200 hover:scale-105 active:scale-95" (click)="createUser()">
+      Login
+    </button>
+
+  </div>
+  <br>
+
+  <div class="text-center text-red-700 h-6">{{ incorrect_login() }}</div>
+
+  <div class="border-b-purple-700 text-center">
+    <a routerLink="/create-account" class="link-as-button text-purple-700  text-center">Need an account? Create one</a>
   </div>
 
-  <div class="form-group">
-    <input type="text" class="form-control" [(ngModel)]="userPasskey" placeholder="Passkey">
-  </div>
 
-  <button class="btn-primary" (click)="createUser()">Login</button>
-
-  <div class="error-message">{{ incorrect_login() }}</div>
-
-  <div class="divider"></div>
-
-  <a routerLink="/create-account" class="link-as-button">Need an account? Create one</a>
 </div>
 </div>

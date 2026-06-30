@@ -24,8 +24,11 @@ class PlayerDashboard implements OnInit {
   status = false
   currentImage: string = "NONE"
   currentID: string = "NONE"
+  message = ""
   constructor(private route: ActivatedRoute,private cdr: ChangeDetectorRef,private ngZone: NgZone) {}
   ngOnInit() {
+    this.message = "Getting Prompt"
+    this.cdr.detectChanges()
     this.http.post('/api/get-prompt',{"data" : "Give me prompt"},{ withCredentials: true })
       .subscribe({
         next: (response: any) => {
@@ -54,6 +57,8 @@ class PlayerDashboard implements OnInit {
     if(!this.status){
       return
     }
+    this.message = "Getting Images"
+    this.cdr.detectChanges()
     const data = {"amount" : amount}
     this.http.post('/api/get-batch-photos',data,{ withCredentials: true })
       .subscribe({
@@ -73,6 +78,8 @@ class PlayerDashboard implements OnInit {
   imageStore = new Map();
   async downloadAll(): Promise<void> {
     this.imageStore = new Map();
+    this.message = "Downloading Images"
+    this.cdr.detectChanges()
     try {
       const downloadPromises = this.images.map(async (file: string) => {
         try {
@@ -116,6 +123,8 @@ class PlayerDashboard implements OnInit {
 
   async checkOllama(): Promise<void> {
     try {
+      this.message = "Checking Ollama"
+      this.cdr.detectChanges()
       // This checks if Ollama is installed and running
       const healthCheck = await fetch('http://localhost:11434/');
       if (!healthCheck.ok) throw new Error("Ollama not running");
@@ -143,6 +152,8 @@ class PlayerDashboard implements OnInit {
       }
 
     } catch (error) {
+      this.message = "Failed to connected to Ollama"
+      this.cdr.detectChanges()
       console.error("Could not connect to Ollama. Is the Ollama app running?", error);
     }
   }
@@ -151,7 +162,8 @@ class PlayerDashboard implements OnInit {
 
   protected model_download_percentage = 0
   async pullModel(): Promise<void> {
-
+    this.message = "Downloading Model"
+    this.cdr.detectChanges()
     console.log("Triggering model download...");
 
     const response = await fetch('http://localhost:11434/api/pull', {
@@ -198,6 +210,8 @@ class PlayerDashboard implements OnInit {
 
   private async processSingleImage(id: string): Promise<void> {
     try {
+      this.message = `Processing Image ${id}`
+      this.cdr.detectChanges()
       const retrievedFile = this.imageStore.get(id);
       if (!retrievedFile) throw new Error(`No image found for ID: ${id}`);
 
@@ -257,6 +271,8 @@ class PlayerDashboard implements OnInit {
     }
   }
   private extractJson(rawText: string): any {
+    this.message = `Extracing Scores`
+    this.cdr.detectChanges()
     const jsonMatch = rawText.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
     if (!jsonMatch) {
       throw new Error("Could not find any JSON structure in the AI output.");
@@ -266,7 +282,8 @@ class PlayerDashboard implements OnInit {
 
   async analyzeLocalImages(imageIds: string[]): Promise<void> {
     const BATCH_SIZE = 1;
-
+    this.message = `Starting Batch`
+    this.cdr.detectChanges()
     console.log(`Starting AI analysis in batches of ${BATCH_SIZE}...`);
 
     for (let i = 0; i < imageIds.length; i += BATCH_SIZE) {
@@ -278,6 +295,7 @@ class PlayerDashboard implements OnInit {
     }
 
     console.log("All image batches successfully analyzed!");
+    this.getContributions();
     if(this.status){
       this.get_image_batch(10)
     }else{
@@ -297,16 +315,28 @@ class PlayerDashboard implements OnInit {
 
   private async submitResultToBackend(id: string, data: any) {
     console.log(data,id)
-    return
-    await fetch(`http://localhost:5003/api/submit-results`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageId: id, analysis: data })
-    });
+    this.message = `Sending Scores`
+    this.cdr.detectChanges()
+    this.http.post('/api/submit-results',{ imageId: id, analysis: data },{ withCredentials: true })
+      .subscribe({
+        next: (response: any) => {
+          if(response.status == "Failed"){
+            console.log("scores failed to save")
+            return
+          }
+          else{
+            console.log("scores Logged")
+            this.user_con +=1
+            this.cdr.detectChanges();
+          }
+        }
+      });
   }
   protected totalProgress = 0
-  protected user_con = null
+  protected user_con = 0
   getContributions(){
+    this.message = `Getting Contributions`
+    this.cdr.detectChanges()
     this.http.post('/api/get-contributions',{"data" : "Give me prompt"},{withCredentials: true})
       .subscribe({
         next: (response: any) => {
@@ -320,8 +350,6 @@ class PlayerDashboard implements OnInit {
 
   async displayImage(relativePath: string): Promise<void> {
     try {
-
-
       this.currentImage = relativePath;
 
     } catch (error) {
