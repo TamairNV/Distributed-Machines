@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../node_modules/tauri-plugin-keepawake-api/dist-js/index.js"],
+  "sourcesContent": ["import { invoke } from '@tauri-apps/api/core';\n\nasync function start(config) {\n    return await invoke('plugin:keepawake|start', { config });\n}\nasync function stop() {\n    return await invoke('plugin:keepawake|stop');\n}\n\nexport { start, stop };\n"],
+  "mappings": ";;;;;;AAEA,eAAe,MAAM,QAAQ;AACzB,SAAO,MAAM,OAAO,0BAA0B,EAAE,OAAO,CAAC;AAC5D;AACA,eAAe,OAAO;AAClB,SAAO,MAAM,OAAO,uBAAuB;AAC/C;",
+  "names": []
+}

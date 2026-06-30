@@ -7,7 +7,7 @@
     "frontendDist": "../dist/Distibuted-Machines/browser",
     "devUrl": "http://localhost:4200",
     "beforeDevCommand": "ng serve",
-    "beforeBuildCommand": "ng serve"
+    "beforeBuildCommand": "ng build"
   },
   "app": {
     "windows": [
@@ -24,7 +24,8 @@
       "assetProtocol": {
         "enable": true,
         "scope": [
-          "$APPDATA/**/*"
+          "$APPDATA/**/*",
+          "$RESOURCE/**/*"
         ]
       }
     }

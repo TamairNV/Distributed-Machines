@@ -1,61 +1,79 @@
 {
-  "hash": "677d8736",
-  "configHash": "5a394e8a",
-  "lockfileHash": "16233e06",
-  "browserHash": "7f3ab7e8",
+  "hash": "126f2889",
+  "configHash": "2319a04f",
+  "lockfileHash": "3e60d7a7",
+  "browserHash": "218ef20f",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "adce1a51",
+      "fileHash": "c21cdf19",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "8860ee42",
+      "fileHash": "1496a96f",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "f328f5c0",
+      "fileHash": "a814f8b8",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "f1ba5749",
+      "fileHash": "0c338586",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "ea5d91e7",
+      "fileHash": "69db2545",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "877081d0",
+      "fileHash": "16c1c2cf",
+      "needsInterop": false
+    },
+    "@tauri-apps/api/core": {
+      "src": "../../../../../../node_modules/@tauri-apps/api/core.js",
+      "file": "@tauri-apps_api_core.js",
+      "fileHash": "e33a5c97",
+      "needsInterop": false
+    },
+    "tauri-plugin-keepawake-api": {
+      "src": "../../../../../../node_modules/tauri-plugin-keepawake-api/dist-js/index.js",
+      "file": "tauri-plugin-keepawake-api.js",
+      "fileHash": "8f141711",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-SXBLA6HL": {
-      "file": "chunk-SXBLA6HL.js"
+    "chunk-BH7VOADK": {
+      "file": "chunk-BH7VOADK.js"
     },
-    "chunk-EKZK64JE": {
-      "file": "chunk-EKZK64JE.js"
+    "chunk-52APXSQT": {
+      "file": "chunk-52APXSQT.js"
     },
-    "chunk-W6FJSM5E": {
-      "file": "chunk-W6FJSM5E.js"
+    "chunk-632HUXYX": {
+      "file": "chunk-632HUXYX.js"
     },
-    "chunk-WD7KNGF7": {
-      "file": "chunk-WD7KNGF7.js"
+    "chunk-V7RGCJM6": {
+      "file": "chunk-V7RGCJM6.js"
     },
-    "chunk-KGQFOFRM": {
-      "file": "chunk-KGQFOFRM.js"
+    "chunk-R57KRKRO": {
+      "file": "chunk-R57KRKRO.js"
+    },
+    "chunk-3Q3OAZPQ": {
+      "file": "chunk-3Q3OAZPQ.js"
+    },
+    "chunk-GOMI4DH3": {
+      "file": "chunk-GOMI4DH3.js"
     }
   }
 }

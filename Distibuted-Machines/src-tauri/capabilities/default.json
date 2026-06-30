@@ -66,11 +66,10 @@
         },
         {
           "url": "http://127.0.0.1:*"
-        },
-        { "url": "http://localhost:*" },
-        { "url": "http://127.0.0.1:*" }
+        }
       ]
     },
-    "shell:default"
+    "shell:default",
+    "keepawake:default"
   ]
 }

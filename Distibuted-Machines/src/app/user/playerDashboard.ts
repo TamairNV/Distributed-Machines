@@ -5,12 +5,12 @@ import { FormsModule } from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgZone } from '@angular/core';
-
+import { start, stop } from "tauri-plugin-keepawake-api";
 
 @Component({
   selector: 'app-ref',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './playerDashboard.html',
 })
 
@@ -26,8 +26,16 @@ class PlayerDashboard implements OnInit {
   currentID: string = "NONE"
   message = ""
   constructor(private route: ActivatedRoute,private cdr: ChangeDetectorRef,private ngZone: NgZone) {}
-  ngOnInit() {
+
+  async ngOnInit() {
     this.message = "Getting Prompt"
+    try {
+      const wakeLock = await navigator.wakeLock.request('screen');
+      console.log('Wake Lock is active!');
+    } catch (err) {
+      console.error('Wake Lock denied by OS:', err);
+    }
+    await start({ display: false, idle: true, sleep: true });
     this.cdr.detectChanges()
     this.http.post('/api/get-prompt',{"data" : "Give me prompt"},{ withCredentials: true })
       .subscribe({
@@ -36,13 +44,13 @@ class PlayerDashboard implements OnInit {
         }
       });
     this.getContributions()
+
   }
 
   start(){
     if(this.startButton === "STOPPING"){
       return
     }
-
     if(this.status){
       this.status = false
       this.startButton = 'STOPPING'
@@ -245,7 +253,7 @@ class PlayerDashboard implements OnInit {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(modelData),
-        credentials: 'omit' // Keeps Flask cookies away from Ollama
+        credentials: 'omit'
       });
 
       if (!response.ok) throw new Error(`Ollama status: ${response.status}`);
@@ -362,6 +370,3 @@ class PlayerDashboard implements OnInit {
 }
 
 export default PlayerDashboard;
-
-
-

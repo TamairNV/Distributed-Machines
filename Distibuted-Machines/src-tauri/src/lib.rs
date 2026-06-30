@@ -12,8 +12,11 @@ pub fn run() {
                         .build(),
                 )?;
             }
+            app.handle().plugin(tauri_plugin_keepawake::init())?;
             Ok(())
         })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
+

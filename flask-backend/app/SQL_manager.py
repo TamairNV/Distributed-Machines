@@ -173,8 +173,9 @@ def get_user_contributions_sql(user_id):
 
 def get_total_contributions_sql():
   query = """
-          SELECT AVG(status = 'Completed') * 100 AS percent_completed
-          FROM Image;
+          SELECT (completed_jobs.cnt * 100.0 / total_images.cnt) AS AveragePercentage
+          FROM (SELECT COUNT(*) AS cnt FROM Job WHERE status = 'Completed') AS completed_jobs,
+               (SELECT COUNT(*) AS cnt FROM Image) AS total_images;
   """
   try:
     connection = get_db()
