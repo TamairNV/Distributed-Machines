@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y libimage-exiftool-perl ffmpeg
 # Copy project files
 COPY . .
 
-# Expose the port (we'll use 8001 to avoid clashing with your other site)
 EXPOSE 8002
 
 # Run Gunicorn

@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  backend:
+    build: ./flask-backend
+    ports:
+      - "8001:8001"
+    networks:
+      - default
+  frontend:
+    build: ./Distibuted-Machines
+    networks:
+      - default
+      - proxy-net
+
+networks:
+  proxy-net:
+    external:
+      name: csc2033_team32_25-26-nginx-proxy-manager-1_default
