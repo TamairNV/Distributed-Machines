@@ -14,7 +14,7 @@ services:
       - PYTHONUNBUFFERED=1
     build: ./flask-backend
     ports:
-      - "8002:8002"
+      - "8003:8002"
     restart: always
     env_file: .env
     networks:
