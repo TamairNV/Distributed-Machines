@@ -25,7 +25,7 @@ services:
 
   tunnel:
     image: cloudflare/cloudflared:latest
-    container_name: cloudflare-tunnel
+    container_name: distributed-machines-tunnel
     command: tunnel run
     restart: always
     environment:
