@@ -7,8 +7,8 @@ services:
       - "8082:80"
     restart: always
     networks:
-      - csc2033_team32_25-26_default
       - Machines_default
+      - csc2033_team32_25-26_default
 
   backend:
     environment:
@@ -37,5 +37,6 @@ services:
 
 networks:
   Machines_default:
+    external: true
   csc2033_team32_25-26_default:
     external: true
