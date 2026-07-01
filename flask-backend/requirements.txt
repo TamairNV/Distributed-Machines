@@ -9,3 +9,5 @@ Werkzeug
 pillow-heif
 bcrypt
 PyJWT
+apple-maps
+pandas
