@@ -107,7 +107,7 @@ class PlayerDashboard implements OnInit {
       const downloadPromises = this.images.map(async (file: string) => {
         try {
           // Changed from relative path to your full API environment URL so Tauri loads it right
-          const response = await fetch(`${environment.apiUrl}/static/images/spot_${file}.jpeg`, {
+          const response = await fetch(`${environment.apiUrl}/static/uploads/spot_${file}.jpeg`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`
