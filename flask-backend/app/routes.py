@@ -72,7 +72,7 @@ def login_user():
 
   token = jwt.encode({
     'id': user[0]['id'],
-    'exp': datetime.utcnow() + timedelta(hours=1)
+    'exp': datetime.utcnow() + timedelta(hours=24)
   }, SECRET_KEY, algorithm="HS256")
 
   safe_profile = {

@@ -304,6 +304,7 @@ class PlayerDashboard implements OnInit {
 
     console.log("All image batches successfully analyzed!");
     this.getContributions();
+    this.cdr.detectChanges();
     if(this.status){
       this.get_image_batch(10)
     }else{
@@ -349,7 +350,7 @@ class PlayerDashboard implements OnInit {
       .subscribe({
         next: (response: any) => {
           console.log(response)
-          this.totalProgress =  Number(response['total_progress'][0]['percent_completed'])
+          this.totalProgress =  Number(response['total_progress'][0]['AveragePercentage'])
           this.user_con = response['user_con'][0]['COUNT(*)']
           this.cdr.detectChanges();
         }
