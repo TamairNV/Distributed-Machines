@@ -26,14 +26,18 @@ def token_required(f):
       auth_header = request.headers.get('Authorization')
       if auth_header and auth_header.startswith('Bearer '):
         token = auth_header.split(" ")[1]
+
+    print(f"DEBUG - Token received: {token}") # This will print to your terminal!
+
+    # YOU MISSED THIS CHECK:
+    if not token or token == "null":
+      return jsonify({"error": "Unauthorized - No Token Provided"}), 401
+
     try:
-      # Verify the token
       decoded_data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-      # Pass the user_id into the route as an argument
       current_user_id = decoded_data['id']
-    except jwt.ExpiredSignatureError:
-      return jsonify({"error": "Token expired"}), 401
-    except jwt.InvalidTokenError:
+    except Exception as e:
+      print(f"DEBUG - JWT Error: {e}")
       return jsonify({"error": "Invalid token"}), 401
 
     return f(current_user_id, *args, **kwargs)
