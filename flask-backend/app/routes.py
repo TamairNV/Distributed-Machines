@@ -23,8 +23,9 @@ def token_required(f):
     token = request.cookies.get('access_token')
 
     if not token:
-      return jsonify({"error": "Unauthorized"}), 401
-
+      auth_header = request.headers.get('Authorization')
+      if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(" ")[1]
     try:
       # Verify the token
       decoded_data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
@@ -43,6 +44,7 @@ def token_required(f):
 @main.route('/api/BOB')
 def index():
   data = "BOB"
+
   return jsonify(data)
 
 @main.route('/api/get-users')
@@ -58,40 +60,44 @@ def serve_uploaded_media(filename):
   # This tells Flask exactly where to fetch the files we just saved
   return send_from_directory('/app/static/uploads', filename)
 
-
 @main.route('/api/login-user',methods=['POST'])
 def login_user():
   user_data = request.get_json()
   if not user_data:
-    return jsonify({"status": "failed", "received": user_data})
-  print(user_data)
+    return jsonify({"status": "failed", "received": user_data}), 400
+
   user = get_user_data_from_name_sql(user_data['name'])
 
   if not user or not bcrypt.checkpw(user_data['passkey'].encode('utf-8'), user[0]['hashedpassword'].encode('utf-8')):
     return jsonify({"status": "failed", "received": "Wrong credentials"}), 401
 
+  # Bumping this to 30 days for your long-running app
   token = jwt.encode({
     'id': user[0]['id'],
-    'exp': datetime.utcnow() + timedelta(hours=24)
+    'exp': datetime.utcnow() + timedelta(days=30)
   }, SECRET_KEY, algorithm="HS256")
 
   safe_profile = {
     "id": user[0]['id'],
     "name": user[0]['username'],
   }
-  resp = make_response(jsonify({"status": "success", "received": safe_profile}))
 
+  resp = make_response(jsonify({
+    "status": "success",
+    "received": safe_profile,
+    "token": token
+  }))
+
+  # Keep the cookie fallback for web development
   resp.set_cookie(
     'access_token',
     token,
     httponly=True,
     samesite='None',
-    secure=True    # Set to True in production so it only sends over HTTPS
+    secure=True
   )
 
   return resp
-
-
 
 @main.route('/api/create-user',methods=['POST'])
 def create_user():

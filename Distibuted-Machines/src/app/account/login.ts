@@ -20,35 +20,24 @@ export class LoginComponent {
   isLoading = false;
 
   createUser() {
-    if (this.isLoading) {
-      return;
-    }
+    if (this.isLoading) return;
     this.isLoading = true;
     this.incorrect_login.set('');
 
     const login_data = { name: this.userName, passkey: this.userPasskey };
 
-    this.http.post(`${environment.apiUrl}/api/login-user`, login_data,
-      { withCredentials: true })
+    this.http.post(`${environment.apiUrl}/api/login-user`, login_data, { withCredentials: true })
       .subscribe({
         next: (response: any) => {
           this.isLoading = false;
-          console.log(response,response.received)
-          if (response.received == "Wrong") {
-            this.incorrect_login.set('Incorrect Login Information');
-          } else {
 
-            const profile = {
-              id: response.received.id,
-              name: this.userName,
-            };
-
-            console.log(profile)
+          if (response.status === "success") {
+            // SAVE THE TOKEN FOR TAURI
+            if (response.token) {
+              localStorage.setItem('access_token', response.token);
+            }
 
             this.router.navigate(['/player-dashboard']).then(r => {});
-
-
-            console.log('User Login successfully!', response);
           }
         },
         error: (err) => {
