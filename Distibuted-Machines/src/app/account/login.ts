@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
-
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -28,7 +28,7 @@ export class LoginComponent {
 
     const login_data = { name: this.userName, passkey: this.userPasskey };
 
-    this.http.post('/api/login-user', login_data,
+    this.http.post(`${environment.apiUrl}/api/login-user`, login_data,
       { withCredentials: true })
       .subscribe({
         next: (response: any) => {

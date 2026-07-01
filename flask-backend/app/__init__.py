@@ -14,7 +14,12 @@ def create_app():
   app.config.from_object(Config)
   app.config['MAX_CONTENT_LENGTH'] = 6000 * 1024 * 1024
 
-  CORS(app, origins=["http://localhost:4200"],supports_credentials=True)
+  CORS(app, supports_credentials=True, origins=[
+    "http://localhost:4200",   # Angular Dev Server
+    "https://tauri.localhost", # Tauri Windows Prod
+    "asset://localhost",       # Tauri Mac Prod (v1)
+    "tauri://localhost"        # Tauri Mac Prod (v2)
+  ])
   Talisman(app,
            force_https=False,
            strict_transport_security=False,

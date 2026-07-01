@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-create-account',
@@ -27,7 +28,7 @@ export class CreateAccountComponent {
 
     const newUser = { name: this.userName, passkey: this.userPasskey };
 
-    this.http.post('/api/create-user', newUser,
+    this.http.post(`${environment.apiUrl}/api/create-user`, newUser,
       { withCredentials: true })
       .subscribe({
         next: (response: any) => {

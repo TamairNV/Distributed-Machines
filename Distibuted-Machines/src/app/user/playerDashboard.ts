@@ -6,6 +6,7 @@ import {Router, RouterLink} from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgZone } from '@angular/core';
 import { start, stop } from "tauri-plugin-keepawake-api";
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-ref',
@@ -37,7 +38,7 @@ class PlayerDashboard implements OnInit {
     }
     await start({ display: false, idle: true, sleep: true });
     this.cdr.detectChanges()
-    this.http.post('/api/get-prompt',{"data" : "Give me prompt"},{ withCredentials: true })
+    this.http.post(`${environment.apiUrl}/api/get-prompt`,{"data" : "Give me prompt"},{ withCredentials: true })
       .subscribe({
         next: (response: any) => {
           this.prompt = response.received
@@ -68,7 +69,7 @@ class PlayerDashboard implements OnInit {
     this.message = "Getting Images"
     this.cdr.detectChanges()
     const data = {"amount" : amount}
-    this.http.post('/api/get-batch-photos',data,{ withCredentials: true })
+    this.http.post(`${environment.apiUrl}/api/get-batch-photos`,data,{ withCredentials: true })
       .subscribe({
         next: async (response: any) => {
           if(response.status == "Failed"){
@@ -326,7 +327,7 @@ class PlayerDashboard implements OnInit {
     console.log(data,id)
     this.message = `Sending Scores`
     this.cdr.detectChanges()
-    this.http.post('/api/submit-results',{ imageId: id, analysis: data },{ withCredentials: true })
+    this.http.post(`${environment.apiUrl}/api/submit-results`,{ imageId: id, analysis: data },{ withCredentials: true })
       .subscribe({
         next: (response: any) => {
           if(response.status == "Failed"){
@@ -346,7 +347,7 @@ class PlayerDashboard implements OnInit {
   getContributions(){
     this.message = `Getting Contributions`
     this.cdr.detectChanges()
-    this.http.post('/api/get-contributions',{"data" : "Give me prompt"},{withCredentials: true})
+    this.http.post(`${environment.apiUrl}/api/get-contributions`,{"data" : "Give me prompt"},{withCredentials: true})
       .subscribe({
         next: (response: any) => {
           console.log(response)
